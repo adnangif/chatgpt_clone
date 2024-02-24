@@ -1,5 +1,6 @@
 import SideBar from "./components/SideBar"
 import './App.css'
+import ChatWindow from "./components/ChatWindow"
 
 export default function App() {
   return (
@@ -9,7 +10,9 @@ export default function App() {
     flex
     w-full">
       <SideBar/>
-      <div className="h-screen w-64 flex-grow  bg-neutral-800">asdf</div>
+      <div className="h-screen w-64 flex-grow  bg-neutral-800">
+        <ChatWindow/>
+      </div>
 
     </div>
   )
