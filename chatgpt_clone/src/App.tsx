@@ -1,7 +1,14 @@
+import SideBar from "./components/SideBar"
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div className="text-neutral-300
+    h-screen bg-neutral-800
+    flex
+    w-full">
+      <SideBar/>
+      <div className="h-screen w-64 flex-grow  bg-neutral-800">asdf</div>
+
+    </div>
   )
 }
