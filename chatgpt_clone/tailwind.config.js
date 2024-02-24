@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import 'tailwind-scrollbar'
 export default {
   content: [
     "./index.html",

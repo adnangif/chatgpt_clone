@@ -1,8 +1,10 @@
 import SideBar from "./components/SideBar"
+import './App.css'
 
 export default function App() {
   return (
-    <div className="text-neutral-300
+    <div className="
+    text-neutral-300
     h-screen bg-neutral-800
     flex
     w-full">
