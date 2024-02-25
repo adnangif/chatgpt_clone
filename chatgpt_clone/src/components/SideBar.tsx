@@ -6,8 +6,8 @@ import SideBarLabel from "./SideBarLabel";
 export default function SideBar() {
     return (
         <div className=" flex flex-col">
-            <div className="hidden p-3 sm:block 
-        sm:w-64
+            <div className="hidden p-3 md:block 
+        md:w-64
         bg-neutral-900
         overflow-auto
         scroll-smooth
@@ -42,7 +42,7 @@ export default function SideBar() {
 
                 </div>
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden md:block">
                 <SideBarFooter />
             </div>
         </div>
