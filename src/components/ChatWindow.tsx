@@ -42,6 +42,8 @@ export default function ChatWindow() {
             type:'user',body:current_prompt
         }])
 
+        console.log(GEMINI_API_KEY)
+
         const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
