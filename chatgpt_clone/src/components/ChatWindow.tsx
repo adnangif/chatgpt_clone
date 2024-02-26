@@ -9,29 +9,51 @@ import MessageBody from "./MessageBody";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 
+
 export default function ChatWindow() {
     const [prompt, setprompt] = React.useState("");
     const [chatting, setChatting] = React.useState(true);
-    const [bucket, setBucket] = React.useState([]);
+    const [bucket, setBucket] = React.useState<{
+        type:'user' | 'gemini';
+        body:string;
+    }[]>([]);
 
     function handlePrompt(event: React.ChangeEvent<HTMLTextAreaElement>) {
         setprompt(event.target.value)
-        console.log(prompt)
     }
 
-    async function promptSubmit() {
+    function handleEnter(event: React.KeyboardEvent){
+        if(event.key == 'Enter'){
+            event.preventDefault()
+            promptSubmit()
+        }
+    }
+
+    function promptSubmit() {
         if (prompt.trim().length == 0) {
             console.log("No Prompt")
             return
         }
         setChatting(true)
+        const current_prompt = prompt
+
+        setprompt('')
+        setBucket([...bucket,{
+            type:'user',body:current_prompt
+        }])
 
         const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
-        console.log(text)
+        model.generateContent(current_prompt).then((result)=>{
+            console.log(result.response.text())
+            setBucket([...bucket,{
+                type:'user',body:current_prompt
+            },{
+                type:'gemini',body:result.response.text()
+            }])
+        })
+
     }
 
 
@@ -45,7 +67,7 @@ export default function ChatWindow() {
                 ><LuUpload size={15} /></div>
             </div>
 
-            <div className="flex flex-col justify-between h-full relative">
+            <div className="flex flex-col justify-between h-full relative text-neutral-200">
                 {chatting == false ?
                     <div className="flex  flex-col p-10 items-center justify-between ">
                         <div>
@@ -54,22 +76,12 @@ export default function ChatWindow() {
                         <div className="text-2xl font-bold">How Can I help you today?</div>
                     </div>
                     :
-                    <div className="flex flex-col items-center ">
-                        <MessageBody type="user"
-                            body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet deserunt beatae eum aspernatur sequi non, illum omnis facere nisi, ipsum laudantium maxime repellat? Quos, laborum distinctio ut eum minus neque!
-                    Maxime incidunt id minima sint illum voluptate, tempore molestiae sed beatae atque porro ab eos architecto quae illo voluptatem? Praesentium velit eos temporibus nemo aperiam ipsam nostrum tempore quisquam accusantium.
-                    Quos aliquam non, dolorum maiores maxime eaque sapiente sed voluptatum possimus enim nihil odit est voluptates omnis, fugit reprehenderit iusto dolores, nesciunt ducimus iste quidem? Deleniti, atque. Beatae, omnis nostrum!
-                    Tempora velit tempore totam quaerat nostrum repudiandae inventore nobis, officia corporis perferendis id! Libero vel omnis dolorem earum dicta beatae placeat consequatur laborum! Nesciunt ipsum aliquam, illum enim animi eveniet.
-                    "
-                        />
-
-                        <MessageBody type="gemini"
-                            body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet deserunt beatae eum aspernatur sequi non, illum omnis facere nisi, ipsum laudantium maxime repellat? Quos, laborum distinctio ut eum minus neque!
-                    Maxime incidunt id minima sint illum voluptate, tempore molestiae sed beatae atque porro ab eos architecto quae illo voluptatem? Praesentium velit eos temporibus nemo aperiam ipsam nostrum tempore quisquam accusantium.
-                    Quos aliquam non, dolorum maiores maxime eaque sapiente sed voluptatum possimus enim nihil odit est voluptates omnis, fugit reprehenderit iusto dolores, nesciunt ducimus iste quidem? Deleniti, atque. Beatae, omnis nostrum!
-                    Tempora velit tempore totam quaerat nostrum repudiandae inventore nobis, officia corporis perferendis id! Libero vel omnis dolorem earum dicta beatae placeat consequatur laborum! Nesciunt ipsum aliquam, illum enim animi eveniet.
-                    "
-                        />
+                    <div className="flex flex-col items-center gap-5 font-semibold">
+                    {
+                        bucket.map((item,index)=>(
+                            <MessageBody key={index} type={item.type} body={item.body}/>
+                        ))
+                    }
 
                     </div>
                 }
@@ -93,7 +105,7 @@ export default function ChatWindow() {
                 <div className="w-full sticky z-10 bg-neutral-800 bottom-0 flex justify-center">
                     <div className="md:w-4/5 w-full m-1 min-w-96 pt-4 bottom-0 ">
                         <div className="relative">
-                            <textarea value={prompt} onChange={handlePrompt} rows={1} className=" w-full p-3  align-middle 
+                            <textarea value={prompt} onKeyDown={handleEnter} onChange={handlePrompt} rows={1} className=" w-full p-3  align-middle 
                         h-full resize-none bg-neutral-800 
                         border border-neutral-400
                         outline-none rounded-2xl" placeholder="Enter Text Here...">
