@@ -128,7 +128,7 @@ To get a local copy up and running follow these simple steps.
 
 Visit the 
     <a href="https://adnangif.github.io/chatgpt_clone">Demo</a>
- site for a look. All the features and behaviours are design to resemble ChatGPT. Write query and Gemini Pro will return response shortly.
+ site for a look. All the features and behaviours are designed to resemble ChatGPT. Write query and Gemini Pro will return response shortly.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
