@@ -140,6 +140,7 @@ Visit the
 - [x] Chat with the AI
 - [x] UI closely resembles ChatGPT
 - [x] Text streaming like ChatGPT
+- [ ] Handle and show errors when Gemini Pro fails to Generate output
 - [ ] The AI remembers the previous chats
 - [ ] Add backend and sessions 
 - [ ] AI can reply based on previously sent queries
