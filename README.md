@@ -31,7 +31,7 @@
 <h3 align="center">A Chatbot made using Gemini Pro </h3>
 
   <p align="center">
-  This is a Chatbot made to replicate the look and feel of the ChatGPT website. It uses the Gemini pro. It is a powerful LLM, being developed by Google 
+  This is a Chatbot made to replicate the look and feel of the ChatGPT website. It uses the Gemini pro which is a powerful LLM, being developed by Google.
     <br />
     <br />
     <a href="https://adnangif.github.io/chatgpt_clone">View Demo</a>
@@ -66,7 +66,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
