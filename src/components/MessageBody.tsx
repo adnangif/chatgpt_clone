@@ -1,33 +1,50 @@
-import { useEffect,useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { TbHexagon3D } from "react-icons/tb";
 // import Markdown, { compiler } from "markdown-to-jsx";
+
+
 import Markdown from "react-markdown";
+
+
+const SCROLL_TRIGGER_LIMIT = 80
 
 export default function MessageBody({ type, body }: { type: 'user' | 'gemini'; body: string }) {
     const [streamingText, setStreamingText] = useState('');
     const [streaming, setStreaming] = useState(true)
-    const scrollref = useRef<HTMLDivElement>(null);
     let idx = 0;
 
     useEffect(() => {
         const updateStreamingText = () => {
-            if (idx >= body.length) return
+            let x = Math.floor((Math.random() * 10) + 1);
+            while(x>0){
+                x--
+                if (idx >= body.length) return
 
-            const newText = body[idx];
-            idx++;
-            setStreamingText(prevText => prevText + newText);
-            if ( idx >= body.length) {
-                clearInterval(intervalId)
-                setStreaming(false)
+                const newText = body[idx];
+                idx++;
+                setStreamingText(prevText => prevText + newText);
+                if ( idx >= body.length) {
+                    clearInterval(intervalId)
+                    setStreaming(false)
+                }
             }
-            
 
         };
-        const intervalId = setInterval(updateStreamingText, 10);
+        const intervalId = setInterval(updateStreamingText, 80);
 
         return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(()=>{
+        const cel = document.getElementById('messages')
+        if(cel){
+            const val = -cel.scrollTop+cel.scrollHeight-cel.offsetHeight
+            if((val) < SCROLL_TRIGGER_LIMIT){
+                cel.scrollTop = cel.scrollHeight
+            }
+        }
+    },[streamingText])
 
     return (
         <div className="flex relative p-3 w-full min-w-xl  max-w-3xl ">
@@ -42,7 +59,7 @@ export default function MessageBody({ type, body }: { type: 'user' | 'gemini'; b
                     </div>
                 }
             </div>
-            <div ref={scrollref} className="flex flex-col items-center justify-start">
+            <div className="flex flex-col items-center justify-start">
                 {type == 'user' ?
                     <div className=" w-full px-3 font-bold">You</div>
                     :
