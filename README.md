@@ -25,7 +25,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/adnangif/chatgpt_clone">
-    <img src="https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/hexagon-3d.svg"  alt="Logo" width="120" height="120">
+    <img src="https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/hexagon-3d.svg"  alt="Logo" width="250" height="250" >
   </a>
 
 <h3 align="center">A Chatbot made using Gemini Pro </h3>
